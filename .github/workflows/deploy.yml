@@ -9,10 +9,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build and deploy pipeline
-        run: docker build -t myapp:dev .
+        run: docker build -t myapp:${{ github.sha }} .
 
       - name: Import image into k3d
-        run: k3d image import myapp:dev -c mycluster
-
-      - name: Restart deployment
-        run: kubectl rollout restart deployment/myapp
+        run: k3d image import myapp:${{ github.sha }} -c mycluster
