@@ -3,7 +3,7 @@ const app = express();
 const port = 3000;
 
 app.get('/', (req, res) => {
-  res.send('My first commit with CI/CD pipeline');
+  res.send('My second commit with CI/CD pipeline and own unique image tag');
 });
 
 app.listen(port, () => {
