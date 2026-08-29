@@ -1,0 +1,18 @@
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and deploy pipeline
+        run: docker build -t myapp:dev .
+
+      - name: Import image into k3d
+        run: k3d image import myapp:dev -c mycluster
+
+      - name: Restart deployment
+        run: kubectl rollout restart deployment/myapp
