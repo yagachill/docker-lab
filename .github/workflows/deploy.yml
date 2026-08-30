@@ -8,8 +8,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build and deploy pipeline
-        run: docker build -t myapp:${{ github.sha }} .
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build image
+        run: docker build -t ghcr.io/yagachill/docker-lab:${{ github.sha }} .
+
+      - name: Push image to GHCR
+        run: docker push ghcr.io/yagachill/docker-lab:${{ github.sha }}
 
       - name: Import image into k3d
-        run: k3d image import myapp:${{ github.sha }} -c mycluster
+        run: k3d image import ghcr.io/yagachill/docker-lab:${{ github.sha }} -c mycluster
