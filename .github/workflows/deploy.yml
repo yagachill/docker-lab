@@ -40,5 +40,4 @@ jobs:
           git commit -m "Update image to ${{ github.sha }}" || echo "No changes to commit"
           git push
 
-      - name: Import image into k3d
-        run: k3d image import ghcr.io/yagachill/docker-lab:${{ github.sha }} -c mycluster
+    
