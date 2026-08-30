@@ -20,5 +20,25 @@ jobs:
       - name: Push image to GHCR
         run: docker push ghcr.io/yagachill/docker-lab:${{ github.sha }}
 
+      - name: Checkout infra repo
+        uses: actions/checkout@v4
+        with:
+          repository: yagachill/tutorial-repo-k8s
+          token: ${{ secrets.INFRA_REPO_TOKEN }}
+          path: infra-repo
+
+      - name: Update image tag in infra repo
+        run: |
+          sed -i "s|image: ghcr.io/yagachill/docker-lab:.*|image: ghcr.io/yagachill/docker-lab:${{ github.sha }}|" infra-repo/deployment.yaml
+
+      - name: Commit and push updated manifest
+        run: |
+          cd infra-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add deployment.yaml
+          git commit -m "Update image to ${{ github.sha }}" || echo "No changes to commit"
+          git push
+
       - name: Import image into k3d
         run: k3d image import ghcr.io/yagachill/docker-lab:${{ github.sha }} -c mycluster
