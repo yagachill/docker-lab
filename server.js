@@ -3,8 +3,8 @@ const app = express();
 const port = 3000;
 
 app.get('/', (req, res) => {
-  throw new Error('Something crashed');
-  res.send('Yaga er best');
+  // throw new Error('Something crashed');
+  res.send('Yaga og bobs er best ');
 });
 
 app.listen(port, () => {
