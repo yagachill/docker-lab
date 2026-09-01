@@ -1,10 +1,12 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const port = 3000;
 
 app.get('/', (req, res) => {
-  // throw new Error('Something crashed');
-  res.send('Yaga og bobs er best ');
+  res.sendFile(path.join(__dirname, 'demo-complete.html'));
+  //throw new Error('Something crashed');
+  //res.send('Dette er en random string for demonstrasjon');
 });
 
 app.listen(port, () => {
