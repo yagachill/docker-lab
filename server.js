@@ -4,9 +4,9 @@ const app = express();
 const port = 3000;
 
 app.get('/', (req, res) => {
-  //res.sendFile(path.join(__dirname, 'demo-complete.html'));
-  throw new Error('Something crashed');
-  res.send('Hello without bugs');
+  res.sendFile(path.join(__dirname, 'demo-complete.html'));
+  //throw new Error('Something crashed');
+  //res.send('Hello without bugs');
 });
 
 app.listen(port, () => {
