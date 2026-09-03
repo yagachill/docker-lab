@@ -5,7 +5,7 @@ const port = 3000;
 
 app.get('/', (req, res) => {
   //res.sendFile(path.join(__dirname, 'demo-complete.html'));
-  //throw new Error('Something crashed');
+  throw new Error('Something crashed');
   res.send('test');
 });
 
